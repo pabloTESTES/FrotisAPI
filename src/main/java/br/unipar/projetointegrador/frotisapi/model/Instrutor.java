@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,4 +24,7 @@ public class Instrutor {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
+
+    @OneToMany(mappedBy = "instrutor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Treino> treinosSupervisionados;
 }

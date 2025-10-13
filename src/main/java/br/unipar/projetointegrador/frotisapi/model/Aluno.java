@@ -28,6 +28,10 @@ public class Aluno {
     @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
 
+    @ManyToOne
+    @JoinColumn(name = "treino_id") // Define o nome da coluna da chave estrangeira
+    private Treino treino;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "aluno",orphanRemoval = true,cascade = jakarta.persistence.CascadeType.ALL)
     private List<Matricula> matriculaList;
