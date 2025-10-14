@@ -1,15 +1,14 @@
 package br.unipar.projetointegrador.frotisapi.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
-@Getter
-@Setter
+@Getter // <-- ESSENCIAL PARA GERAR O getId()
+@Setter // <-- ESSENCIAL PARA GERAR OS SETTERS
 public class Plano {
 
     @Id
@@ -17,7 +16,13 @@ public class Plano {
     private Long id;
 
     private String nome;
-    private String descricao;
-    private float valor;
+    private Double valor;
 
+    // Se você tiver um relacionamento com Matrícula, por exemplo:
+    @OneToMany(mappedBy = "plano")
+    private List<Matricula> matriculas;
+
+    // Construtores, se necessário...
+    public Plano() {
+    }
 }
