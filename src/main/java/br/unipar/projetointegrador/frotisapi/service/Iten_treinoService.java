@@ -7,4 +7,9 @@ import org.springframework.stereotype.Service;
 public class Iten_treinoService {
 
     private Item_treinoRepository iten_treinoRepository;
+
+
+
+
+
 }

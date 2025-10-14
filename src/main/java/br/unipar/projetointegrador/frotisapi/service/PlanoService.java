@@ -4,6 +4,8 @@ import br.unipar.projetointegrador.frotisapi.model.Plano;
 import br.unipar.projetointegrador.frotisapi.repository.PlanoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PlanoService {
     private PlanoRepository planoRepository;
@@ -16,7 +18,7 @@ public class PlanoService {
         return planoRepository.save(plano);
     }
 
-    public Iterable<Plano> listarTodos() {
+    public List<Plano> listarTodos() {
         return planoRepository.findAll();
     }
 

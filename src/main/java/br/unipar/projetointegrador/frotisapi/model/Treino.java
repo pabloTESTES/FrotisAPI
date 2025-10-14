@@ -1,5 +1,7 @@
 package br.unipar.projetointegrador.frotisapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,13 +25,10 @@ public class Treino {
     @JoinColumn(name = "instrutor_id")
     private Instrutor instrutor;
 
-    /**
-     * CORREÇÃO PRINCIPAL:
-     * Um Treino tem uma lista (@OneToMany) de Alunos.
-     * "mappedBy = 'treino'" diz ao Hibernate para procurar o campo "treino" na classe Aluno
-     * para encontrar a configuração da chave estrangeira.
-     */
-    @OneToMany(mappedBy = "treino", cascade = CascadeType.ALL, orphanRemoval = true)
+    // No arquivo Treino.java
+// ...
+    @JsonManagedReference("aluno-treinos") // O "pai" (lado da lista) usa ManagedReference
+    @OneToMany(mappedBy = "treino")
     private List<Aluno> alunos;
 
     // A lista de itens do treino continua a mesma

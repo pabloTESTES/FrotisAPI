@@ -4,6 +4,8 @@ import br.unipar.projetointegrador.frotisapi.model.Matricula;
 import br.unipar.projetointegrador.frotisapi.repository.MatriculaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MatriculaService {
 
@@ -24,5 +26,8 @@ public class MatriculaService {
         matriculaRepository.deleteById(id);
     }
 
-
+    public List<Matricula> listarTodos() {
+        // Lógica para listar todas as matrículas
+        return matriculaRepository.findAll();
+    }
 }

@@ -4,6 +4,8 @@ import br.unipar.projetointegrador.frotisapi.model.Treino;
 import br.unipar.projetointegrador.frotisapi.repository.TreinoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TreinoService {
 
@@ -17,7 +19,7 @@ public class TreinoService {
         return treinoRepository.save(treino);
     }
 
-    public Iterable<Treino> findAll() {
+    public List<Treino> findAll() {
         return treinoRepository.findAll();
     }
 

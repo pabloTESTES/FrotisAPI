@@ -18,7 +18,7 @@ public class Matricula {
     private Long id;
 
 
-    @JsonBackReference // Evita o loop no JSON
+    @JsonBackReference("aluno-matriculas") // Nome correspondente// Evita o loop no JSON
     @ManyToOne
     @JoinColumn(name = "aluno_id") // Cria a coluna da chave estrangeira no banco
     private Aluno aluno;
