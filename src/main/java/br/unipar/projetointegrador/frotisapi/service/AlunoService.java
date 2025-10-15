@@ -38,5 +38,20 @@ public class AlunoService {
         return alunoRepository.findAll();
     }
 
+    public Aluno atualizar(Long id, Aluno alunoAtualizado) {
+        Aluno alunoExistente = buscarPorId(id);
+
+        if (alunoExistente != null) {
+            // Atualiza os campos do aluno existente com os valores do aluno atualizado
+            alunoExistente.setNome(alunoAtualizado.getNome());
+            alunoExistente.setEmail(alunoAtualizado.getEmail());
+            alunoExistente.setTelefone(alunoAtualizado.getTelefone());
+            return alunoRepository.save(alunoExistente);
+        } else {
+            return null; // Ou lance uma exceção, dependendo da sua lógica de negócios
+        }
+
+    }
+
 
 }

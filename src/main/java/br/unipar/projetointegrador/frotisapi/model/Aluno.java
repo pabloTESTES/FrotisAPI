@@ -29,18 +29,13 @@ public class Aluno {
     @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
 
-    /**
-     * ✅ CORREÇÃO APLICADA AQUI
-     * A relação é @ManyToOne, então usamos @JsonBackReference.
-     */
+
     @JsonBackReference("aluno-treinos")
     @ManyToOne
     @JoinColumn(name = "treino_id")
     private Treino treino;
 
-    /**
-     * Esta parte já estava correta (@OneToMany usa @JsonManagedReference).
-     */
+
     @JsonManagedReference("aluno-matriculas")
     @OneToMany(mappedBy = "aluno", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Matricula> matriculaList;

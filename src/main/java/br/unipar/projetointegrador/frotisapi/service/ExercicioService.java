@@ -2,6 +2,8 @@ package br.unipar.projetointegrador.frotisapi.service;
 
 import br.unipar.projetointegrador.frotisapi.model.Exercicio;
 import br.unipar.projetointegrador.frotisapi.repository.ExercicioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +12,11 @@ import java.util.List;
 public class ExercicioService {
 
     private ExercicioRepository exercicioRepository;
+
+    @Autowired
+    public ExercicioService(ExercicioRepository exercicioRepository) {
+        this.exercicioRepository = exercicioRepository;
+    }
 
     public Exercicio salvar(Exercicio exercicio) {
         return exercicioRepository.save(exercicio);

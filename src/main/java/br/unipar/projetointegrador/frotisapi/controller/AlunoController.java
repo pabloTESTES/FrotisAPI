@@ -34,4 +34,32 @@ public class AlunoController {
         Aluno alunoSalvo = alunoService.salvar(aluno);
         return ResponseEntity.status(Response.SC_CREATED).body(alunoSalvo);
     }
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<Aluno> buscarAlunoPorID(@PathVariable Long id) {
+        Aluno aluno = alunoService.buscarPorId(id);
+
+        if (aluno == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(aluno);
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<Void> deletarAluno(@PathVariable Long id) {
+        alunoService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<Aluno> atualizarAluno(@PathVariable Long id, @RequestBody Aluno alunoAtualizado) {
+        Aluno aluno = alunoService.atualizar(id, alunoAtualizado);
+
+        if (aluno == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(aluno);
+    }
 }
