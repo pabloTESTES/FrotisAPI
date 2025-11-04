@@ -1,12 +1,13 @@
 package br.unipar.projetointegrador.frotisapi.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet; // <-- MUDANÇA (importar Set)
 import java.util.List;
+import java.util.Set; // <-- MUDANÇA (importar Set)
 
 @Entity
 @Getter
@@ -20,18 +21,16 @@ public class Treino {
     private String nome;
     private String diaSemana;
 
-    // Relacionamento com Instrutor continua o mesmo (Muitos treinos para Um instrutor)
     @ManyToOne
     @JoinColumn(name = "instrutor_id")
+    @JsonIgnore
     private Instrutor instrutor;
 
-    // No arquivo Treino.java
-// ...
-    @JsonManagedReference("aluno-treinos") // O "pai" (lado da lista) usa ManagedReference
-    @OneToMany(mappedBy = "treino")
-    private List<Aluno> alunos;
+    // <-- MUDANÇA: "List<Aluno>" virou "Set<Aluno>"
+    @OneToMany(mappedBy = "treino", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Aluno> alunos = new HashSet<>(); // <-- MUDANÇA
 
-    // A lista de itens do treino continua a mesma
-    @OneToMany(mappedBy = "treino", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Item_treino> itens;
+    // A lista de exercícios pode continuar sendo uma List
+    @OneToMany(mappedBy = "treino", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Exercicio> exercicios;
 }

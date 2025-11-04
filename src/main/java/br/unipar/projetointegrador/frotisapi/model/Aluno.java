@@ -1,42 +1,74 @@
 package br.unipar.projetointegrador.frotisapi.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference; // <-- Mude a importação
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference; // IMPORTE ISTO
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Aluno {
+public class Aluno implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nome;
-    private String CPF;
-    private String telefone;
+    private String cpf;
+    private String senha;
     private String email;
-    private float peso;
-    private float altura;
-    private Date dataNascimento;
+    private Date data_nascimento;
+    private String telefone;
     private String sexo;
+    private float altura;
+    private float peso;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Endereco endereco;
 
-
-    @JsonBackReference("aluno-treinos")
+    @JsonBackReference("aluno-treino")
     @ManyToOne
-    @JoinColumn(name = "treino_id")
     private Treino treino;
 
+    // --- MÉTODOS USERDETAILS ---
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.emptyList();
+    }
 
-    @JsonManagedReference("aluno-matriculas")
-    @OneToMany(mappedBy = "aluno", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Matricula> matriculaList;
+    @Override
+    public String getPassword() {
+        return this.senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.cpf;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

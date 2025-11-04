@@ -3,7 +3,9 @@ package br.unipar.projetointegrador.frotisapi.controller;
 import br.unipar.projetointegrador.frotisapi.model.Aluno;
 import br.unipar.projetointegrador.frotisapi.service.AlunoService;
 import org.apache.catalina.connector.Response;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,5 +63,23 @@ public class AlunoController {
         }
 
         return ResponseEntity.ok(aluno);
+    }
+
+    @GetMapping("/perfil")
+    public ResponseEntity<Aluno> getPerfil() {
+        // Pega as informações de autenticação do usuário que fez a requisição
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // O "username" que salvamos no token é o CPF do aluno
+        String cpf = authentication.getName();
+
+        // Usa o AlunoService para buscar o aluno pelo CPF
+        Aluno aluno = alunoService.buscarPorCpf(cpf);
+
+        if (aluno != null) {
+            return ResponseEntity.ok(aluno);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

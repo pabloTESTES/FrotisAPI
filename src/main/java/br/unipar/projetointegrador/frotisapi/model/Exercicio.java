@@ -1,9 +1,9 @@
 package br.unipar.projetointegrador.frotisapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.List;
 
 @Entity
@@ -14,12 +14,14 @@ public class Exercicio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
     private int series;
     private int repeticoes;
 
-    @OneToMany(mappedBy = "exercicio", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Item_treino> treinosOndeAparece; // Um exercício pode estar em várias listas de "itens"
-
+    @JsonBackReference("exercicio-treino") //evita loop infinito no JSON
+    @ManyToOne //muitos exercícios pertencem a Um treino
+    @JoinColumn(name = "treino_id") //chave estrangeira
+    private Treino treino;
 
 }
